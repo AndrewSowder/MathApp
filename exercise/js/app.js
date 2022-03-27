@@ -1,4 +1,4 @@
-let currentProblem = 0;
+let currentProblem = 1;
 let currentScore = 0;
 let listOfProblems = [];
 let shuffleArr = [];
@@ -63,15 +63,16 @@ function displayQuestionAndAnswers() {
             const li = document.querySelector('li');
 
             if (answer === problem.correctAnswer) {
-                li.innerText = answer;
-                li.classList.add("correct")
-                ul.appendChild(li);
-            }else {
+                li.innerText = problem.correctAnswer;
+                li.setAttribute('class', 'correct')
+            } else {
 
-            li.innerText = answer;
-            li.classList.add("wrong")
-            ul.appendChild(li);
+                li.innerText = answer;
+                li.setAttribute('class', 'wrong')
+
             }
+
+            ul.appendChild(li);
         });
 
     });
@@ -85,19 +86,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     displayQuestionAndAnswers();
 
-    const answerUl = document.querySelector('ul');
+    const allAnswers = document.querySelectorAll('li');
 
-    answerUl.forEach((answerLi) => {
-        answerLi.addEventListener('click', () => {
+    let score =  document.querySelector('span.currentScore');
 
+    let problemNum =  document.querySelector('span.currentProblem');
 
+    allAnswers.forEach((answer) => {
+        answer.addEventListener('click', () => {
+
+            if(answer.classList.contains('correct')){
+
+                currentScore++;
+
+                currentProblem++;
+
+                score.innerText = `${currentScore}`;
+
+                problemNum.innerText.currentProblem;
+
+        
+            }
 
         })
     })
-
-
-
-
 
 })
 
