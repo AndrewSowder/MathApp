@@ -22,9 +22,9 @@ function createProblem() {
             leftNum: getRandomNumber(10),
             rightNum: getRandomNumber(10),
             correctAnswer: 0,
-            wrongAnswer2:0,
-            wrongAnswer3:0,
-            wrongAnswer4:0
+            wrongAnswer2: 0,
+            wrongAnswer3: 0,
+            wrongAnswer4: 0
         }
 
         problem.correctAnswer = problem.leftNum * problem.rightNum;
@@ -44,46 +44,58 @@ function createProblem() {
 }
 
 function displayQuestionAndAnswers() {
-const problemElem = document.getElementById('problem');
+
+
+    const problemElem = document.getElementById('problem');
 
     listOfProblems.forEach((problem) => {
 
-    let problemDesc = `${problem.leftNum} * ${problem.rightNum}`;
+        let problemDesc = `${problem.leftNum} * ${problem.rightNum}`;
 
-    problemElem.querySelector('div.expression').innerText = problemDesc;
+        problemElem.querySelector('div.expression').innerText = problemDesc;
 
-    shuffleArr = shuffleArray([problem.correctAnswer, problem.wrongAnswer2, problem.wrongAnswer3, problem.wrongAnswer4]);
+        shuffleArr = shuffleArray([problem.correctAnswer, problem.wrongAnswer2, problem.wrongAnswer3, problem.wrongAnswer4]);
 
-    const ul = document.querySelector('ul');
+        const ul = document.querySelector('ul');
 
-    shuffleArr.forEach((answer) => {
+        shuffleArr.forEach((answer) => {
 
-        const li = document.querySelector('li');
-        li.innerText = answer;
-        ul.appendChild(li);
+            const li = document.querySelector('li');
+
+            if (answer === problem.correctAnswer) {
+                li.innerText = answer;
+                li.classList.add("correct")
+                ul.appendChild(li);
+            }else {
+
+            li.innerText = answer;
+            li.classList.add("wrong")
+            ul.appendChild(li);
+            }
+        });
+
     });
-
-});
 }
 
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    
+
     createProblem();
 
     displayQuestionAndAnswers();
 
-    const answerUl =  document.querySelector('ul');
+    const answerUl = document.querySelector('ul');
 
-    answerUl.forEach((answerLi) =>{
+    answerUl.forEach((answerLi) => {
         answerLi.addEventListener('click', () => {
+
 
 
         })
     })
 
-    
+
 
 
 
