@@ -2,6 +2,7 @@ let currentProblem = 0;
 let currentScore = 0;
 let listOfProblems = [];
 let answerArr = [];
+let shuffleArr = [];
 
 
 
@@ -37,11 +38,20 @@ function createProblem() {
 
         answerArr = [problem.correctAnswer, getRandomNumber(81), getRandomNumber(81), getRandomNumber(81)];
 
-        let shuffleArr = shuffleArray(answerArr);
+        shuffleArr = shuffleArray(answerArr);
 
         console.log(problem)
     }
 
+}
+
+function displayAnswers() {
+    const ul = document.querySelector('ul');
+    shuffleArr.forEach((answer) => {
+        const li = document.querySelector('li');
+        li.innerText = answer;
+        ul.appendChild(li);
+    });
 }
 
 
@@ -52,11 +62,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const problemElem = document.getElementById('problem');
 
-    let problemDesc =  `${listOfProblems[0].problem.leftNum} * ${listOfProblems[0].problem.rightNum}`   
+
+    let problemDesc = `${listOfProblems[0].leftNum} * ${listOfProblems[0].rightNum}`
 
     problemElem.querySelector('div.expression').innerText = problemDesc;
 
-
+    displayAnswers();
 
 
 
