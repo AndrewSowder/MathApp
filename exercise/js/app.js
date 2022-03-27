@@ -3,6 +3,23 @@ let currentScore = 0;
 let listOfProblems = [];
 let shuffleArr = [];
 
+const allAnswers = document.querySelectorAll('li');
+
+let score = document.querySelector('span.currentScore');
+
+let problemNum = document.querySelector('span.currentProblem');
+
+const problemElem = document.getElementById('problem');
+
+let header = document.querySelector('header');
+
+let text = header.querySelector('p');
+
+let problemDiv = problemElem.querySelector('div.expression');
+
+
+let answerSection = document.getElementById('answers');
+
 
 /**
  * Utility function to generate a random number based on max
@@ -10,13 +27,23 @@ let shuffleArr = [];
  */
 function getRandomNumber(max) {
     return Math.floor(Math.random() * Math.floor(max));
+
 }
+
+function getRandomNumberMaybeNeg() {
+
+    let num = Math.floor(Math.random() * 10) + 1;
+    num *= Math.round(Math.random()) ? 1 : -1;
+    return num
+
+}
+
 
 function shuffleArray(arr) {
     return arr.sort(function (a, b) { return Math.random() - 0.5 })
 }
 
-function createProblem(operator) {
+function createProblem(operatorArr) {
     for (let i = 0; i < 10; i++) {
         let problem = {
             leftNum: getRandomNumber(10),
@@ -24,187 +51,222 @@ function createProblem(operator) {
             correctAnswer: 0,
             wrongAnswer2: 0,
             wrongAnswer3: 0,
-            wrongAnswer4: 0
+            wrongAnswer4: 0,
+            operand: ""
         }
 
-        switch (operator) {
-            case '+':
+        operatorArr.forEach((operator) => {
+
+            if (operator.includes('+')) {
                 problem.correctAnswer = problem.leftNum + problem.rightNum;
-                break;
-            case '-':
+                problem.wrongAnswer2 = getRandomNumber(81);
+                problem.wrongAnswer3 = getRandomNumber(81);
+                problem.wrongAnswer4 = getRandomNumber(81);
+                problem.operand = '+';
+            }
+            if (operator.includes('-')) {
+
                 problem.correctAnswer = problem.leftNum - problem.rightNum;
-                break;
-            case '*':
+                problem.wrongAnswer2 = getRandomNumberMaybeNeg();
+                problem.wrongAnswer3 = getRandomNumberMaybeNeg();
+                problem.wrongAnswer4 = getRandomNumberMaybeNeg();
+                problem.operand = '-';
+            }
+            if (operator.includes('*')) {
+
                 problem.correctAnswer = problem.leftNum * problem.rightNum;
-                break;
-            case '/':
+                problem.wrongAnswer2 = getRandomNumber(81);
+                problem.wrongAnswer3 = getRandomNumber(81);
+                problem.wrongAnswer4 = getRandomNumber(81);
+                problem.operand = '*';
+            }
+
+            if (operator.includes('/')) {
                 problem.correctAnswer = problem.leftNum / problem.rightNum;
-                break;
-        }
+            problem.wrongAnswer2 = getRandomNumber(81);
+            problem.wrongAnswer3 = getRandomNumber(81);
+            problem.wrongAnswer4 = getRandomNumber(81);
+            problem.operand = '/';
+            }
+            
 
-
-        problem.wrongAnswer2 = getRandomNumber(81);
-        problem.wrongAnswer3 = getRandomNumber(81);
-        problem.wrongAnswer4 = getRandomNumber(81);
-
-
-
-        shuffleArr = shuffleArray([problem.correctAnswer, problem.wrongAnswer2, problem.wrongAnswer3, problem.wrongAnswer4]);
-
-
+        });
         listOfProblems.push(problem);
-
     }
 }
 
 
-    function displayQuestionAndAnswers(operator) {
 
 
-        const problemElem = document.getElementById('problem');
+function displayQuestionAndAnswers() {
 
-        listOfProblems.forEach((problem) => {
 
-            let problemDesc = `${problem.leftNum} ${operator} ${problem.rightNum}`;
+    const problemElem = document.getElementById('problem');
 
-            problemElem.querySelector('div.expression').innerText = problemDesc;
+    listOfProblems.forEach((problem) => {
 
-            shuffleArr = shuffleArray([problem.correctAnswer, problem.wrongAnswer2, problem.wrongAnswer3, problem.wrongAnswer4]);
+        /* let operator = items[Math.floor(Math.random()*items.length)]; */
 
-            const ul = document.querySelector('ul');
+        let problemDesc = `${problem.leftNum} ${problem.operand} ${problem.rightNum}`;
 
-            shuffleArr.forEach((answer) => {
+        problemElem.querySelector('div.expression').innerText = problemDesc;
 
-                const li = document.querySelector('li');
+        shuffleArr = shuffleArray([problem.correctAnswer, problem.wrongAnswer2, problem.wrongAnswer3, problem.wrongAnswer4]);
 
-                if (answer === problem.correctAnswer) {
-                    li.innerText = problem.correctAnswer;
-                    li.setAttribute('class', 'correct')
-                } else {
+        const ul = document.querySelector('ul');
 
-                    li.innerText = answer;
-                    li.setAttribute('class', 'wrong')
+        shuffleArr.forEach((answer) => {
 
-                }
+            const li = document.querySelector('li');
 
-                ul.appendChild(li);
-            });
+            if (answer === problem.correctAnswer) {
+                li.innerText = problem.correctAnswer;
+                li.setAttribute('class', 'correct')
+            } else {
 
+                li.innerText = answer;
+                li.setAttribute('class', 'wrong')
+
+            }
+
+            ul.appendChild(li);
         });
-    }
 
-    function showHidden(element) {
-        element.classList.remove('hidden');
-        element.classList.add('show-hide');
-    }
+    });
+}
 
-    function makeHidden(element) {
-        element.classList.remove('show-hide');
-        element.classList.add('hidden');
-    }
+function choseQuestionTypes() {
 
 
 
-    document.addEventListener('DOMContentLoaded', () => {
 
-        const operator = '+';
 
-        createProblem(operator);
+}
 
-        displayQuestionAndAnswers(operator);
+function showHidden(element) {
+    element.classList.remove('hidden');
+    element.classList.add('show-hide');
+}
 
-        const allAnswers = document.querySelectorAll('li');
-
-        let score = document.querySelector('span.currentScore');
-
-        let problemNum = document.querySelector('span.currentProblem');
-
-        const problemElem = document.getElementById('problem');
-
-        let header = document.querySelector('header');
-
-        let text = header.querySelector('p');
+function makeHidden(element) {
+    element.classList.remove('show-hide');
+    element.classList.add('hidden');
+}
 
 
 
-        allAnswers.forEach((answer) => {
-            answer.addEventListener('click', (event) => {
-                event.preventDefault();
+document.addEventListener('DOMContentLoaded', () => {
 
-                if (answer.classList.contains('correct')) {
+    const operatorArr = ['-', '+'];
 
-                    currentScore++;
-                    currentProblem++;
+    createProblem(operatorArr);
 
-                } else
-
-                    currentProblem++;
-
-                createProblem(operator);
-
-                displayQuestionAndAnswers(operator);
-
-                if (currentProblem > 10) {
-
-                    currentProblem = 10;
-
-                    let problemDiv = problemElem.querySelector('div.expression');
-
-                    let answerSection = document.getElementById('answers');
+    displayQuestionAndAnswers();
 
 
+    allAnswers.forEach((answer) => {
+        answer.addEventListener('click', (event) => {
+            event.preventDefault();
 
-                    makeHidden(problemDiv);
-                    makeHidden(answerSection);
-                    makeHidden(text);
+            if (answer.classList.contains('correct')) {
+
+                currentScore++;
+                currentProblem++;
+
+            } else
+
+                currentProblem++;
+
+            createProblem(operatorArr);
+
+            displayQuestionAndAnswers();
+
+            if (currentProblem > 10) {
+
+                currentProblem = 10;
+
+                let problemDiv = problemElem.querySelector('div.expression');
+
+                let answerSection = document.getElementById('answers');
 
 
-                }
 
-                score.innerText = `${currentScore}`;
-
-                problemNum.innerText = `${currentProblem}`;
-
-            });
+                makeHidden(problemDiv);
+                makeHidden(answerSection);
+                makeHidden(text);
 
 
+            }
+
+            score.innerText = `${currentScore}`;
+
+            problemNum.innerText = `${currentProblem}`;
 
         });
 
 
-        let startOverBtn = document.querySelector('button');
-
-        startOverBtn.addEventListener('click', () => {
-
-
-            let problemDiv = problemElem.querySelector('div.expression');
-
-
-            let answerSection = document.getElementById('answers');
-
-            showHidden(problemDiv);
-
-            showHidden(answerSection);
-
-            showHidden(text);
-
-
-            currentScore = 0;
-
-            currentProblem = 1;
-
-            score.innerText = `${currentScore}`
-
-            problemNum.innerText = `${currentProblem}`
-
-            createProblem(operator);
-
-            displayQuestionAndAnswers(operator);
-
-
-        });
 
     });
 
 
+    let startOverBtn = document.querySelector('button');
 
+    startOverBtn.addEventListener('click', () => {
+
+
+        showHidden(problemDiv);
+
+        showHidden(answerSection);
+
+        showHidden(text);
+
+
+        currentScore = 0;
+
+        currentProblem = 1;
+
+        score.innerText = `${currentScore}`
+
+        problemNum.innerText = `${currentProblem}`
+
+        createProblem(operatorArr);
+
+        displayQuestionAndAnswers();
+
+
+    });
+
+});
+
+
+
+/* if (operator.includes('+')) {
+    problem.correctAnswer = problem.leftNum + problem.rightNum;
+    problem.wrongAnswer2 = getRandomNumber(81);
+    problem.wrongAnswer3 = getRandomNumber(81);
+    problem.wrongAnswer4 = getRandomNumber(81);
+    problem.operator = '+';
+}
+if (operator.includes('-')) {
+
+    problem.correctAnswer = problem.leftNum - problem.rightNum;
+    problem.wrongAnswer2 = getRandomNumberMaybeNeg();
+    problem.wrongAnswer3 = getRandomNumberMaybeNeg();
+    problem.wrongAnswer4 = getRandomNumberMaybeNeg();
+    problem.operator = '-';
+}
+if (operator.includes('*')) {
+
+    problem.correctAnswer = problem.leftNum * problem.rightNum;
+    problem.wrongAnswer2 = getRandomNumber(81);
+    problem.wrongAnswer3 = getRandomNumber(81);
+    problem.wrongAnswer4 = getRandomNumber(81);
+    problem.operator = '*';
+}
+
+if (operator.includes('/'))
+    problem.correctAnswer = problem.leftNum / problem.rightNum;
+problem.wrongAnswer2 = getRandomNumber(81);
+problem.wrongAnswer3 = getRandomNumber(81);
+problem.wrongAnswer4 = getRandomNumber(81);
+problem.operator = '/'; */
