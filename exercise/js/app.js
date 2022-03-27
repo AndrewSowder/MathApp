@@ -50,29 +50,36 @@ function createProblem() {
 
 }
 
-function displayAnswers() {
+function displayQuestionAndAnswers() {
+const problemElem = document.getElementById('problem');
+
+    listOfProblems.forEach((problem) => {
+
+    let problemDesc = `${problem.leftNum} * ${problem.rightNum}`;
+
+    problemElem.querySelector('div.expression').innerText = problemDesc;
+
+    shuffleArr = shuffleArray([problem.correctAnswer, problem.wrongAnswer2, problem.wrongAnswer3, problem.wrongAnswer4]);
+
     const ul = document.querySelector('ul');
+
     shuffleArr.forEach((answer) => {
+
         const li = document.querySelector('li');
         li.innerText = answer;
         ul.appendChild(li);
     });
+
+});
 }
 
 
 
 document.addEventListener('DOMContentLoaded', () => {
-
+    
     createProblem();
 
-    const problemElem = document.getElementById('problem');
-
-
-    let problemDesc = `${listOfProblems[0].leftNum} * ${listOfProblems[0].rightNum}`
-
-    problemElem.querySelector('div.expression').innerText = problemDesc;
-
-    displayAnswers();
+    displayQuestionAndAnswers();
 
 
 
