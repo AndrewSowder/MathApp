@@ -55,42 +55,41 @@ function createProblem(operatorArr) {
             operand: ""
         }
 
-        operatorArr.forEach((operator) => {
+        operator = operatorArr[Math.floor(Math.random() * operatorArr.length)];
 
-            if (operator.includes('+')) {
-                problem.correctAnswer = problem.leftNum + problem.rightNum;
-                problem.wrongAnswer2 = getRandomNumber(81);
-                problem.wrongAnswer3 = getRandomNumber(81);
-                problem.wrongAnswer4 = getRandomNumber(81);
-                problem.operand = '+';
-            }
-            if (operator.includes('-')) {
 
-                problem.correctAnswer = problem.leftNum - problem.rightNum;
-                problem.wrongAnswer2 = getRandomNumberMaybeNeg();
-                problem.wrongAnswer3 = getRandomNumberMaybeNeg();
-                problem.wrongAnswer4 = getRandomNumberMaybeNeg();
-                problem.operand = '-';
-            }
-            if (operator.includes('*')) {
+        if (operator.includes('+')) {
+            problem.correctAnswer = problem.leftNum + problem.rightNum;
+            problem.wrongAnswer2 = getRandomNumber(81);
+            problem.wrongAnswer3 = getRandomNumber(81);
+            problem.wrongAnswer4 = getRandomNumber(81);
+            problem.operand = '+';
+        }
+        else if (operator.includes('-')) {
+            problem.correctAnswer = problem.leftNum - problem.rightNum;
+            problem.wrongAnswer2 = getRandomNumberMaybeNeg();
+            problem.wrongAnswer3 = getRandomNumberMaybeNeg();
+            problem.wrongAnswer4 = getRandomNumberMaybeNeg();
+            problem.operand = '-';
+        }
+        else if (operator.includes('*')) {
+            problem.correctAnswer = problem.leftNum * problem.rightNum;
+            problem.wrongAnswer2 = getRandomNumber(81);
+            problem.wrongAnswer3 = getRandomNumber(81);
+            problem.wrongAnswer4 = getRandomNumber(81);
+            problem.operand = '*';
+        }
 
-                problem.correctAnswer = problem.leftNum * problem.rightNum;
-                problem.wrongAnswer2 = getRandomNumber(81);
-                problem.wrongAnswer3 = getRandomNumber(81);
-                problem.wrongAnswer4 = getRandomNumber(81);
-                problem.operand = '*';
-            }
-
-            if (operator.includes('/')) {
-                problem.correctAnswer = problem.leftNum / problem.rightNum;
+        else if (operator.includes('/')) {
+            problem.correctAnswer = problem.leftNum / problem.rightNum;
             problem.wrongAnswer2 = getRandomNumber(81);
             problem.wrongAnswer3 = getRandomNumber(81);
             problem.wrongAnswer4 = getRandomNumber(81);
             problem.operand = '/';
-            }
-            
+        }
 
-        });
+
+
         listOfProblems.push(problem);
     }
 }
@@ -100,12 +99,11 @@ function createProblem(operatorArr) {
 
 function displayQuestionAndAnswers() {
 
-
     const problemElem = document.getElementById('problem');
 
     listOfProblems.forEach((problem) => {
 
-        /* let operator = items[Math.floor(Math.random()*items.length)]; */
+
 
         let problemDesc = `${problem.leftNum} ${problem.operand} ${problem.rightNum}`;
 
@@ -138,11 +136,8 @@ function displayQuestionAndAnswers() {
 function choseQuestionTypes() {
 
 
-
-
-
 }
-
+;
 function showHidden(element) {
     element.classList.remove('hidden');
     element.classList.add('show-hide');
