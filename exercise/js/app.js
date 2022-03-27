@@ -88,30 +88,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const allAnswers = document.querySelectorAll('li');
 
-    let score =  document.querySelector('span.currentScore');
+    let score = document.querySelector('span.currentScore');
 
-    let problemNum =  document.querySelector('span.currentProblem');
+    let problemNum = document.querySelector('span.currentProblem');
 
     allAnswers.forEach((answer) => {
-        answer.addEventListener('click', () => {
+        answer.addEventListener('click', (event) => {
+            event.preventDefault();
 
-            if(answer.classList.contains('correct')){
+            if (answer.classList.contains('correct')) {
 
                 currentScore++;
+                currentProblem++;
+
+            } else
 
                 currentProblem++;
 
-                score.innerText = `${currentScore}`;
+            score.innerText = `${currentScore}`;
 
-                problemNum.innerText.currentProblem;
+            problemNum.innerText = `${currentProblem}`;
 
-        
-            }
+            createProblem();
+
+            displayQuestionAndAnswers();
 
         })
-    })
+        
 
-})
+            
+
+            
+
+        });
+
+
+
+
+});
+
+
+
 
 
 
