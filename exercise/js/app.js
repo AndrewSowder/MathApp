@@ -78,6 +78,16 @@ function displayQuestionAndAnswers() {
     });
 }
 
+function showHidden(element) {
+    element.classList.remove('hidden');
+    element.classList.add('show-hide');
+}
+
+function makeHidden(element) {
+    element.classList.remove('show-hide');
+    element.classList.add('hidden');
+}
+
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -92,6 +102,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let problemNum = document.querySelector('span.currentProblem');
 
+    const problemElem = document.getElementById('problem');
+
+    let header = document.querySelector('header');
+
+    let text = header.querySelector('p');
+
+
+
     allAnswers.forEach((answer) => {
         answer.addEventListener('click', (event) => {
             event.preventDefault();
@@ -105,22 +123,70 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 currentProblem++;
 
-            score.innerText = `${currentScore}`;
-
-            problemNum.innerText = `${currentProblem}`;
-
             createProblem();
 
             displayQuestionAndAnswers();
 
-        })
-        
+            if (currentProblem > 10) {
 
-            
+                currentProblem = 10;
 
-            
+                let problemDiv = problemElem.querySelector('div.expression');
+                
+                let answerSection = document.getElementById('answers');
+
+
+
+                makeHidden(problemDiv);
+                makeHidden(answerSection);
+                makeHidden(text);
+             
+
+            }
+
+            score.innerText = `${currentScore}`;
+
+            problemNum.innerText = `${currentProblem}`;
 
         });
+
+
+
+    });
+
+
+    let startOverBtn = document.querySelector('button');
+
+    startOverBtn.addEventListener('click', () => {
+
+
+        let problemDiv = problemElem.querySelector('div.expression');
+        
+
+        let answerSection = document.getElementById('answers');
+
+        showHidden(problemDiv);
+
+        showHidden(answerSection);
+
+        showHidden(text);
+        
+
+        currentScore = 0;
+
+        currentProblem = 1;
+
+        score.innerText = `${currentScore}`
+
+        problemNum.innerText = `${currentProblem}`
+
+        createProblem();
+
+        displayQuestionAndAnswers();
+
+
+    });
+
 
 
 
