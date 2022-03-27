@@ -135,9 +135,48 @@ function displayQuestionAndAnswers() {
 
 function choseQuestionTypes() {
 
+    text.innerText = "Please choose the math operations you would like to practice and click start";
 
+    let startBtn = document.querySelector('button');
+
+    startBtn.innerText = "Start";
+
+    makeHidden(problemElem);
+
+
+
+    // creating checkbox element
+    var checkbox = document.createElement('input');
+
+    // Assigning the attributes
+    // to created checkbox
+    checkbox.type = "checkbox";
+    checkbox.name = "name";
+    checkbox.value = "value";
+    checkbox.id = "id";
+
+    // creating label for checkbox
+    var label = document.createElement('label');
+
+    // assigning attributes for 
+    // the created label tag 
+    label.htmlFor = "id";
+
+    // appending the created text to 
+    // the created label tag 
+    label.appendChild(document.createTextNode('This is the label for checkbox.'));
+
+    // appending the checkbox
+    // and label to div
+    li.appendChild(checkbox);
+    li.appendChild(label);
 }
-;
+
+
+
+
+
+
 function showHidden(element) {
     element.classList.remove('hidden');
     element.classList.add('show-hide');
@@ -153,6 +192,8 @@ function makeHidden(element) {
 document.addEventListener('DOMContentLoaded', () => {
 
     const operatorArr = ['-', '+'];
+
+    choseQuestionTypes();
 
     createProblem(operatorArr);
 
@@ -234,34 +275,3 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-
-/* if (operator.includes('+')) {
-    problem.correctAnswer = problem.leftNum + problem.rightNum;
-    problem.wrongAnswer2 = getRandomNumber(81);
-    problem.wrongAnswer3 = getRandomNumber(81);
-    problem.wrongAnswer4 = getRandomNumber(81);
-    problem.operator = '+';
-}
-if (operator.includes('-')) {
-
-    problem.correctAnswer = problem.leftNum - problem.rightNum;
-    problem.wrongAnswer2 = getRandomNumberMaybeNeg();
-    problem.wrongAnswer3 = getRandomNumberMaybeNeg();
-    problem.wrongAnswer4 = getRandomNumberMaybeNeg();
-    problem.operator = '-';
-}
-if (operator.includes('*')) {
-
-    problem.correctAnswer = problem.leftNum * problem.rightNum;
-    problem.wrongAnswer2 = getRandomNumber(81);
-    problem.wrongAnswer3 = getRandomNumber(81);
-    problem.wrongAnswer4 = getRandomNumber(81);
-    problem.operator = '*';
-}
-
-if (operator.includes('/'))
-    problem.correctAnswer = problem.leftNum / problem.rightNum;
-problem.wrongAnswer2 = getRandomNumber(81);
-problem.wrongAnswer3 = getRandomNumber(81);
-problem.wrongAnswer4 = getRandomNumber(81);
-problem.operator = '/'; */
