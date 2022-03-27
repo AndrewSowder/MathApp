@@ -4,13 +4,6 @@ let listOfProblems = [];
 let shuffleArr = [];
 
 
-
-
-
-
-
-
-
 /**
  * Utility function to generate a random number based on max
  * @param {number} max
@@ -80,6 +73,17 @@ document.addEventListener('DOMContentLoaded', () => {
     createProblem();
 
     displayQuestionAndAnswers();
+
+    const answerUl =  document.querySelector('ul');
+
+    answerUl.forEach((answerLi) =>{
+        answerLi.addEventListener('click', () => {
+
+
+        })
+    })
+
+    
 
 
 
