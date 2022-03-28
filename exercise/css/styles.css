@@ -50,6 +50,24 @@ button {
   display:none;
 }
 
+#checkbox-example {
+  width: 10%;
+  height: 15px;
+  background: #555;
+  margin: 20px 10px;
+  position: relative;
+  border-radius: 5px;
+}
+
+.checkbox{
+  width: 45px;
+  height: 15px;
+  background: #555;
+  margin: 20px 80px;
+  position: relative;
+  border-radius: 5px;
+}
+
 
 
 

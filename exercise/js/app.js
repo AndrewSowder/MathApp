@@ -104,7 +104,6 @@ function displayQuestionAndAnswers() {
     listOfProblems.forEach((problem) => {
 
 
-
         let problemDesc = `${problem.leftNum} ${problem.operand} ${problem.rightNum}`;
 
         problemElem.querySelector('div.expression').innerText = problemDesc;
@@ -112,6 +111,7 @@ function displayQuestionAndAnswers() {
         shuffleArr = shuffleArray([problem.correctAnswer, problem.wrongAnswer2, problem.wrongAnswer3, problem.wrongAnswer4]);
 
         const ul = document.querySelector('ul');
+
 
         shuffleArr.forEach((answer) => {
 
@@ -143,33 +143,31 @@ function choseQuestionTypes() {
 
     makeHidden(problemElem);
 
+    let arr = ['Addition', 'Subtraction', 'Multiplication', 'Division']
 
 
-    // creating checkbox element
-    var checkbox = document.createElement('input');
+    arr.forEach((item) => {
 
-    // Assigning the attributes
-    // to created checkbox
-    checkbox.type = "checkbox";
-    checkbox.name = "name";
-    checkbox.value = "value";
-    checkbox.id = "id";
+        allAnswers.forEach((li) => {
+            let span = document.createElement('span');
 
-    // creating label for checkbox
-    var label = document.createElement('label');
+            let input = document.createElement('input')
 
-    // assigning attributes for 
-    // the created label tag 
-    label.htmlFor = "id";
+            input.type = 'checkbox';
 
-    // appending the created text to 
-    // the created label tag 
-    label.appendChild(document.createTextNode('This is the label for checkbox.'));
+            span.innerText = `${item}`;
 
-    // appending the checkbox
-    // and label to div
-    li.appendChild(checkbox);
-    li.appendChild(label);
+            
+
+            li.appendChild(input)
+            li.appendChild(span)
+
+        });
+
+    });
+
+    ul.appendChild(li);
+
 }
 
 
