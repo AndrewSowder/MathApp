@@ -59,9 +59,9 @@ function createProblem(operatorArr) {
 
         if (operator.includes('+')) {
             problem.correctAnswer = problem.leftNum + problem.rightNum;
-            problem.wrongAnswer2 = getRandomNumber(81);
-            problem.wrongAnswer3 = getRandomNumber(81);
-            problem.wrongAnswer4 = getRandomNumber(81);
+            problem.wrongAnswer2 = getRandomNumber(18);
+            problem.wrongAnswer3 = getRandomNumber(18);
+            problem.wrongAnswer4 = getRandomNumber(18);
             problem.operand = '+';
         }
         else if (operator.includes('-')) {
@@ -80,10 +80,12 @@ function createProblem(operatorArr) {
         }
 
         else if (operator.includes('/')) {
-            problem.correctAnswer = problem.leftNum / problem.rightNum;
-            problem.wrongAnswer2 = getRandomNumber(81);
-            problem.wrongAnswer3 = getRandomNumber(81);
-            problem.wrongAnswer4 = getRandomNumber(81);
+            problem.leftNum = getRandomNumber(15) 
+            problem.rightNum = getRandomNumber(10) * problem.leftNum 
+            problem.correctAnswer = problem.rightNum / problem.leftNum;
+            problem.wrongAnswer2 = getRandomNumber(40);
+            problem.wrongAnswer3 = getRandomNumber(40);
+            problem.wrongAnswer4 = getRandomNumber(40);
             problem.operand = '/';
         }
 
@@ -197,6 +199,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     startBtn.addEventListener('click', () => {
         operatorArr = getUserChoice();
+
+        
         startBtn.innerText = "Start Over"
         startBtn.classList.add("start-over")
 
@@ -205,6 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
         createProblem(operatorArr);
         displayQuestionAndAnswers()
         main();
+
 
 
     });
