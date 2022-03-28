@@ -1,5 +1,4 @@
-let currentProblem = 1;
-let currentScore = 0;
+
 let listOfProblems = [];
 let shuffleArr = [];
 
@@ -89,21 +88,20 @@ function createProblem(operatorArr) {
         }
 
 
-
         listOfProblems.push(problem);
     }
 }
 
 function getUserChoice() {
+    let values = [],
+        inputs = document.getElementsByTagName("input");
 
-    document.getElementById('#btnStartOver').onclick = function () {
-        var markedCheckbox = document.querySelectorAll('input[type="checkbox"]:checked');
-        for (var checkbox of markedCheckbox) {
-            if (checkbox.checked)
-                document.body.append(checkbox.value + ' ');
-        }
-        return markedCheckbox;
-    }
+    for (let i = 0; i < inputs.length; i++)
+        if (inputs[i].type === "checkbox" && inputs[i].checked)
+            values.push(inputs[i].value);
+    return values
+
+
 }
 
 
@@ -149,44 +147,29 @@ function choseQuestionTypes() {
 
     text.innerText = "Please choose the math operations you would like to practice and click start";
 
-    let startBtn = document.querySelector('button');
-
-    startBtn.innerText = "Start";
-
     makeHidden(problemElem);
 
+    let arr = ['Addition', 'Subtraction', 'Multiplication', 'Division']
+    let valArr = ['+', '-', '*', '/']
 
-    allAnswers.forEach((li) => {
-
-        let arr = ['Addition', 'Subtraction', 'Multiplication', 'Division']
-
-        
-        
+    allAnswers.forEach((box, index) => {
 
         let span = document.createElement('span');
 
         let input = document.createElement('input')
-        
-        input.type = 'checkbox';    
-        li.appendChild(input)
-        
-        
-        li.appendChild(span)
 
-        span.innerText = arr[0];
+        input.type = 'checkbox';
+        input.value = valArr[index]
+
+        span.innerText = arr[index];
+
+        box.appendChild(input)
+
+        box.appendChild(span)
 
     });
 
-    li.appendChild(li);
-
-
-
 }
-
-
-
-
-
 
 function showHidden(element) {
     element.classList.remove('hidden');
@@ -200,89 +183,86 @@ function makeHidden(element) {
 
 
 
+
 document.addEventListener('DOMContentLoaded', () => {
 
-    const operatorArr = ['-', '+'];
+    let operatorArr = []
+
+    let startBtn = document.querySelector('button');
+
+    startBtn.innerText = "Start";
+    startBtn.classList = 'start';
 
     choseQuestionTypes();
 
-    createProblem(operatorArr);
+    startBtn.addEventListener('click', () => {
+        operatorArr = getUserChoice();
+        startBtn.innerText = "Start Over"
+        startBtn.classList.add("start-over")
 
-    displayQuestionAndAnswers();
+        text.innerText = "Please select an answer below the problem by clicking on the box  "
+        showHidden(problemElem);
+        createProblem(operatorArr);
+        displayQuestionAndAnswers()
+        main();
 
 
-    allAnswers.forEach((answer) => {
-        answer.addEventListener('click', (event) => {
-            event.preventDefault();
-
-            if (answer.classList.contains('correct')) {
-
-                currentScore++;
-                currentProblem++;
-
-            } else
-
-                currentProblem++;
-
-            createProblem(operatorArr);
-
-            displayQuestionAndAnswers();
-
-            if (currentProblem > 10) {
-
-                currentProblem = 10;
-
-                let problemDiv = problemElem.querySelector('div.expression');
-
-                let answerSection = document.getElementById('answers');
+    });
 
 
 
-                makeHidden(problemDiv);
-                makeHidden(answerSection);
-                makeHidden(text);
 
+    function main() {
 
-            }
+        let currentProblem = 1;
+        let currentScore = 0;
 
-            score.innerText = `${currentScore}`;
+        allAnswers.forEach((answer) => {
+            answer.addEventListener('click', (event) => {
+                event.preventDefault();
 
-            problemNum.innerText = `${currentProblem}`;
+                if (answer.classList.contains('correct')) {
+
+                    currentScore++;
+                    currentProblem++;
+
+                } else
+
+                    currentProblem++;
+
+                createProblem(operatorArr);
+
+                displayQuestionAndAnswers();
+
+                if (currentProblem > 10) {
+
+                    currentProblem = 10;
+
+                    let problemDiv = problemElem.querySelector('div.expression');
+
+                    let answerSection = document.getElementById('answers');
+
+                    makeHidden(problemDiv);
+                    makeHidden(answerSection);
+                    makeHidden(text)
+
+                }
+
+                score.innerText = `${currentScore}`;
+
+                problemNum.innerText = `${currentProblem}`;
+
+            });
 
         });
 
-
-
-    });
-
-
-    let startOverBtn = document.querySelector('button');
-
+        let startOverBtn = document.querySelector('button');
     startOverBtn.addEventListener('click', () => {
+        location.reload()
+    })
 
 
-        showHidden(problemDiv);
 
-        showHidden(answerSection);
-
-        showHidden(text);
-
-
-        currentScore = 0;
-
-        currentProblem = 1;
-
-        score.innerText = `${currentScore}`
-
-        problemNum.innerText = `${currentProblem}`
-
-        createProblem(operatorArr);
-
-        displayQuestionAndAnswers();
-
-
-    });
+    }
 
 });
-
-
