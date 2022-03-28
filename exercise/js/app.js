@@ -94,6 +94,18 @@ function createProblem(operatorArr) {
     }
 }
 
+function getUserChoice() {
+
+    document.getElementById('#btnStartOver').onclick = function () {
+        var markedCheckbox = document.querySelectorAll('input[type="checkbox"]:checked');
+        for (var checkbox of markedCheckbox) {
+            if (checkbox.checked)
+                document.body.append(checkbox.value + ' ');
+        }
+        return markedCheckbox;
+    }
+}
+
 
 
 
@@ -143,30 +155,31 @@ function choseQuestionTypes() {
 
     makeHidden(problemElem);
 
-    let arr = ['Addition', 'Subtraction', 'Multiplication', 'Division']
 
+    allAnswers.forEach((li) => {
 
-    arr.forEach((item) => {
+        let arr = ['Addition', 'Subtraction', 'Multiplication', 'Division']
 
-        allAnswers.forEach((li) => {
-            let span = document.createElement('span');
+        
+        
 
-            let input = document.createElement('input')
+        let span = document.createElement('span');
 
-            input.type = 'checkbox';
+        let input = document.createElement('input')
+        
+        input.type = 'checkbox';    
+        li.appendChild(input)
+        
+        
+        li.appendChild(span)
 
-            span.innerText = `${item}`;
-
-            
-
-            li.appendChild(input)
-            li.appendChild(span)
-
-        });
+        span.innerText = arr[0];
 
     });
 
-    ul.appendChild(li);
+    li.appendChild(li);
+
+
 
 }
 
