@@ -16,7 +16,6 @@ let text = header.querySelector('p');
 
 let problemDiv = problemElem.querySelector('div.expression');
 
-
 let answerSection = document.getElementById('answers');
 
 
@@ -26,7 +25,6 @@ let answerSection = document.getElementById('answers');
  */
 function getRandomNumber(max) {
     return Math.floor(Math.random() * Math.floor(max));
-
 }
 
 function getRandomNumberMaybeNeg() {
@@ -34,9 +32,7 @@ function getRandomNumberMaybeNeg() {
     let num = Math.floor(Math.random() * 10) + 1;
     num *= Math.round(Math.random()) ? 1 : -1;
     return num
-
 }
-
 
 function shuffleArray(arr) {
     return arr.sort(function (a, b) { return Math.random() - 0.5 })
@@ -102,12 +98,7 @@ function getUserChoice() {
         if (inputs[i].type === "checkbox" && inputs[i].checked)
             values.push(inputs[i].value);
     return values
-
-
 }
-
-
-
 
 function displayQuestionAndAnswers() {
 
@@ -173,6 +164,56 @@ function choseQuestionTypes() {
 
 }
 
+function main() {
+
+    let currentProblem = 1;
+    let currentScore = 0;
+
+    allAnswers.forEach((answer) => {
+        answer.addEventListener('click', (event) => {
+            event.preventDefault();
+
+            if (answer.classList.contains('correct')) {
+
+                currentScore++;
+                currentProblem++;
+
+            } else
+
+                currentProblem++;
+
+            createProblem(operatorArr);
+
+            displayQuestionAndAnswers();
+
+            if (currentProblem > 10) {
+
+                currentProblem = 10;
+
+                let problemDiv = problemElem.querySelector('div.expression');
+
+                let answerSection = document.getElementById('answers');
+
+                makeHidden(problemDiv);
+                makeHidden(answerSection);
+                makeHidden(text)
+
+            }
+
+            score.innerText = `${currentScore}`;
+
+            problemNum.innerText = `${currentProblem}`;
+
+        });
+
+    });
+
+    let startOverBtn = document.querySelector('button');
+startOverBtn.addEventListener('click', () => {
+    location.reload()
+})
+}
+
 function showHidden(element) {
     element.classList.remove('hidden');
     element.classList.add('show-hide');
@@ -182,9 +223,6 @@ function makeHidden(element) {
     element.classList.remove('show-hide');
     element.classList.add('hidden');
 }
-
-
-
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -199,75 +237,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     startBtn.addEventListener('click', () => {
         operatorArr = getUserChoice();
-
-        
         startBtn.innerText = "Start Over"
         startBtn.classList.add("start-over")
-
         text.innerText = "Please select an answer below the problem by clicking on the box  "
         showHidden(problemElem);
         createProblem(operatorArr);
-        displayQuestionAndAnswers()
+        displayQuestionAndAnswers();
         main();
-
-
-
     });
-
-
-
-
-    function main() {
-
-        let currentProblem = 1;
-        let currentScore = 0;
-
-        allAnswers.forEach((answer) => {
-            answer.addEventListener('click', (event) => {
-                event.preventDefault();
-
-                if (answer.classList.contains('correct')) {
-
-                    currentScore++;
-                    currentProblem++;
-
-                } else
-
-                    currentProblem++;
-
-                createProblem(operatorArr);
-
-                displayQuestionAndAnswers();
-
-                if (currentProblem > 10) {
-
-                    currentProblem = 10;
-
-                    let problemDiv = problemElem.querySelector('div.expression');
-
-                    let answerSection = document.getElementById('answers');
-
-                    makeHidden(problemDiv);
-                    makeHidden(answerSection);
-                    makeHidden(text)
-
-                }
-
-                score.innerText = `${currentScore}`;
-
-                problemNum.innerText = `${currentProblem}`;
-
-            });
-
-        });
-
-        let startOverBtn = document.querySelector('button');
-    startOverBtn.addEventListener('click', () => {
-        location.reload()
-    })
-
-
-
-    }
-
 });
+
+
+    
