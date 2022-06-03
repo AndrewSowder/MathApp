@@ -36,6 +36,40 @@ node_modules
 
 # Add any directories, files, or patterns you don't want to be tracked by version control
 
+
+node_modules/
+npm-debug.log
+nohup.out
+selenium-debug.log
+config/conf.json
+
+# For macOS
+.DS_Store
+
+# excluded selenium.jar from GitHub it's 21MB!
+# nightwatch
+# nightwatch/selenium.jar
+
+# exclude chromedriver as its 12MB and changes frequently!
+nightwatch/chromedriver
+
+# exclude allure reports and data
+allure-report
+allure-results
+
+reports
+screenshots
+.env
+
+package-lock.json
+
+# exclude log files
+*.log
+
+vrt/latest
+vrt/diff
+testsOuput*/
+
 # Eclipse
 .classpath
 .project
